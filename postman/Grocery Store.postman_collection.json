@@ -1,0 +1,76 @@
+{
+	"info": {
+		"_postman_id": "659886e3-ad3d-4a53-8511-1bae633772bf",
+		"name": "Grocery Store",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19688504"
+	},
+	"item": [
+		{
+			"name": "Get All Discounts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/discounts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"discounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Prices",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/prices",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"prices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"items\":[\n      {\n         \"productType\":\"BREAD\",\n         \"quantity\":3,\n         \"ageDays\":3\n      },\n      {\n         \"productType\":\"VEGETABLE\",\n         \"quantity\":200\n      },\n      {\n         \"productType\":\"BEER\",\n         \"quantity\":6,\n         \"beerType\": \"GERMAN\"\n      }\n   ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
