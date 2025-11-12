@@ -1,6 +1,5 @@
 package com.example.grocerystore.services.utils;
 
-
 import com.example.grocery.model.discounts.BeerDiscount;
 import com.example.grocery.model.discounts.BreadDiscount;
 import com.example.grocery.model.discounts.VegetableDiscount;
