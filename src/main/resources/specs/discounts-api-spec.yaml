@@ -1,0 +1,126 @@
+openapi: 3.0.3
+info:
+  title: Discounts API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: Discounts
+    description: API for grocery discounts
+paths:
+  /discounts:
+    get:
+      tags:
+        - Discounts
+      description: List all available discounts in the grocery
+      responses:
+        "200":
+          description: Discounts are successfully retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllDiscountsResponse'
+components:
+  schemas:
+    GetAllDiscountsResponse:
+      type: object
+      properties:
+        vegetableDiscounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/VegetableDiscount'
+          example:
+            - minWeightGrams: 0
+              maxWeightGrams: 100
+              discountPercent: 5.0
+            - minWeightGrams: 101
+              maxWeightGrams: 500
+              discountPercent: 7.0
+            - minWeightGrams: 501
+              maxWeightGrams: null
+              discountPercent: 10.0
+        beerDiscounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/BeerDiscount'
+          example:
+            - beerType: Belgium
+              packPrice: 3.0
+              packSize: 6
+            - beerType: Dutch
+              packPrice: 2.0
+              packSize: 6
+            - beerType: German
+              packPrice: 4.0
+              packSize: 6
+        breadDiscounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/BreadDiscount'
+          example:
+            - ageDays: 3
+              buyQuantity: 1
+              takeQuantity: 2
+            - ageDays: 6
+              buyQuantity: 1
+              takeQuantity: 3
+    VegetableDiscount:
+      type: object
+      required:
+        - discountPercent
+      properties:
+        minWeightGrams:
+          type: integer
+          format: int32
+          description: Minimum total weight of vegetables in grams for this discount range. Optional if 0.
+        maxWeightGrams:
+          type: integer
+          format: int32
+          description: Maximum total weight of vegetables in grams for this discount range. Optional if no upper limit.
+        discountPercent:
+          type: number
+          format: double
+          description: Discount percentage applied to all vegetable items in the order.
+    BeerDiscount:
+      type: object
+      required:
+        - beerType
+        - packPrice
+        - packSize
+      properties:
+        beerType:
+          type: string
+          description: Type of beer, for instance "Belgium", "Dutch", "German".
+          example: Belgium
+        packPrice:
+          type: number
+          format: double
+          description: Price for a pack of beers of this type.
+          example: 3.0
+        packSize:
+          type: integer
+          format: int32
+          description: Number of beers in a pack required to get the discount.
+          example: 6
+    BreadDiscount:
+      type: object
+      required:
+        - ageDays
+        - buyQuantity
+        - takeQuantity
+      properties:
+        ageDays:
+          type: integer
+          format: int32
+          description: Age of the bread in days.
+          example: 3
+        buyQuantity:
+          type: integer
+          format: int32
+          description: Number of items the customer needs to buy to get the discount.
+          example: 1
+        takeQuantity:
+          type: integer
+          format: int32
+          description: Number of items the customer receives in total (including the bought items) under this discount.
+          example: 2
