@@ -146,6 +146,28 @@
                             </configOptions>
                         </configuration>
                     </execution>
+                    <!-- Orders API -->
+                    <execution>
+                        <id>generate-orders-api</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/specs/orders-api-spec.yaml</inputSpec>
+                            <generatorName>spring</generatorName>
+                            <apiPackage>com.example.grocery.api.orders</apiPackage>
+                            <modelPackage>com.example.grocery.model.orders</modelPackage>
+                            <output>${project.build.directory}/generated-sources/openapi/orders</output>
+                            <apiNameSuffix>Api</apiNameSuffix>
+                            <apiNamePrefix>Orders</apiNamePrefix>
+                            <configOptions>
+                                <interfaceOnly>true</interfaceOnly>
+                                <useTags>true</useTags>
+                                <skipDefaultInterface>true</skipDefaultInterface>
+                                <useJakartaEe>true</useJakartaEe>
+                            </configOptions>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
 
@@ -176,6 +198,18 @@
                         <configuration>
                             <sources>
                                 <source>${project.build.directory}/generated-sources/openapi/prices/src/main/java</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>add-orders-api-sources</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/openapi/orders/src/main/java</source>
                             </sources>
                         </configuration>
                     </execution>

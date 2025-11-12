@@ -1,0 +1,115 @@
+openapi: 3.0.3
+info:
+  title: Orders API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: Orders
+    description: API to create and retrieve orders
+paths:
+  /orders:
+    post:
+      tags:
+        - Orders
+      summary: Create an order
+      description: Takes a list of items with quantities and calculates total prices and discounts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderRequest'
+      responses:
+        "200":
+          description: Order successfully processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateOrderResponse'
+components:
+  schemas:
+    ProductType:
+      type: string
+      enum:
+        - BREAD
+        - VEGETABLE
+        - BEER
+    CreateOrderRequest:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItemRequest'
+          minItems: 1
+          description: List of items in the order
+    OrderItemRequest:
+      type: object
+      required:
+        - productType
+        - quantity
+      properties:
+        productType:
+          $ref: '#/components/schemas/ProductType'
+        quantity:
+          type: number
+          format: int32
+          description: Quantity of the product. Pieces for bread/beer, grams for vegetables
+        ageDays:
+          type: integer
+          description: Required only for bread to calculate applicable discount
+        beerType:
+          type: string
+          enum:
+            - DUTCH
+            - BELGIAN
+            - GERMAN
+          description: Required only if productType is BEER
+    CreateOrderResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItemResponse'
+        totalPriceBeforeDiscount:
+          type: number
+          format: double
+          description: Sum of item prices before discounts
+        totalDiscountAmount:
+          type: number
+          format: double
+          description: Total discount applied for the order
+        totalPrice:
+          type: number
+          format: double
+          description: Final total price after discounts
+    OrderItemResponse:
+      type: object
+      properties:
+        productType:
+          $ref: '#/components/schemas/ProductType'
+        quantity:
+          type: integer
+          format: int32
+        unit:
+          type: string
+          description: Unit used for this product (piece, 100g, bottle)
+        unitPrice:
+          type: number
+          format: double
+          description: Price per unit or per 100g for vegetables
+        totalPriceBeforeDiscount:
+          type: number
+          format: double
+          description: Total price before discount
+        discountApplied:
+          type: boolean
+        discountAmount:
+          type: number
+          format: double
+        totalPrice:
+          type: number
+          format: double
+          description: Price after discount
