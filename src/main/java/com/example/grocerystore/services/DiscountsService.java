@@ -4,7 +4,7 @@ import com.example.grocery.model.discounts.BeerDiscount;
 import com.example.grocery.model.discounts.BreadDiscount;
 import com.example.grocery.model.discounts.GetAllDiscountsResponse;
 import com.example.grocery.model.discounts.VegetableDiscount;
-import com.example.grocerystore.persistence.DiscountsPersistenceService;
+import com.example.grocerystore.services.cache.DiscountsCacheService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -13,12 +13,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DiscountsService {
 
-    private final DiscountsPersistenceService discountDbService;
+    private final DiscountsCacheService cacheService;
 
     public GetAllDiscountsResponse getAllDiscounts() {
-        List<VegetableDiscount> vegetables = discountDbService.retrieveAllVegetableDiscounts();
-        List<BeerDiscount> beers = discountDbService.retrieveAllBeerDiscounts();
-        List<BreadDiscount> breads = discountDbService.retrieveAllBreadDiscounts();
+        List<VegetableDiscount> vegetables = cacheService.getVegetables();
+        List<BeerDiscount> beers = cacheService.getBeers();
+        List<BreadDiscount> breads = cacheService.getBreads();
 
         return new GetAllDiscountsResponse()
                 .vegetableDiscounts(vegetables)

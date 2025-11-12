@@ -1,12 +1,12 @@
-package com.example.grocerystore.persistence;
+package com.example.grocerystore.persistence.services;
 
 import com.example.grocery.model.discounts.BeerDiscount;
 import com.example.grocery.model.discounts.BreadDiscount;
 import com.example.grocery.model.discounts.VegetableDiscount;
-import com.example.grocerystore.mappings.DbModelMapper;
-import com.example.grocerystore.persistence.repos.BeerDiscountsRepo;
-import com.example.grocerystore.persistence.repos.BreadDiscountsRepo;
-import com.example.grocerystore.persistence.repos.VegetableDiscountsRepo;
+import com.example.grocerystore.mappers.DbModelMapper;
+import com.example.grocerystore.persistence.repos.discounts.BeerDiscountsRepo;
+import com.example.grocerystore.persistence.repos.discounts.BreadDiscountsRepo;
+import com.example.grocerystore.persistence.repos.discounts.VegetableDiscountsRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

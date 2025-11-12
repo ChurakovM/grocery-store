@@ -1,4 +1,4 @@
-package com.example.grocerystore.mappings;
+package com.example.grocerystore.mappers;
 
 import com.example.grocery.model.discounts.BeerDiscount;
 import com.example.grocery.model.discounts.BreadDiscount;
