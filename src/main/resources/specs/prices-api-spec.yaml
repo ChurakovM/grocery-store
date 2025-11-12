@@ -1,0 +1,61 @@
+openapi: 3.0.3
+info:
+  title: Prices API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: Prices
+    description: API for grocery product prices
+paths:
+  /prices:
+    get:
+      tags:
+        - Prices
+      description: List all product prices in the grocery
+      responses:
+        "200":
+          description: Prices are successfully retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllPricesResponse'
+components:
+  schemas:
+    GetAllPricesResponse:
+      type: object
+      properties:
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductPrice'
+          example:
+            - productType: BREAD
+              unitPrice: 1.0
+              unit: piece
+            - productType: VEGETABLE
+              unitPrice: 1.0
+              unit: 100g
+            - productType: BEER
+              unitPrice: 0.5
+              unit: bottle
+    ProductPrice:
+      type: object
+      required:
+        - productType
+        - unitPrice
+        - unit
+      properties:
+        productType:
+          type: string
+          description: Type of the product (BREAD, VEGETABLE, BEER)
+          example: BREAD
+        unitPrice:
+          type: number
+          format: double
+          description: Price per unit of the product
+          example: 1.0
+        unit:
+          type: string
+          description: Unit type for this product price (e.g., piece, 100g, bottle)
+          example: piece
