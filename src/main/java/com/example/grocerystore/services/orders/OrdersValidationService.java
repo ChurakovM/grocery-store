@@ -32,13 +32,20 @@ public class OrdersValidationService {
             checkQuantityIsPositiveNumber(requestedItem);
 
             if (productType == ProductType.BREAD) {
+                beerTypeMustNotBeSpecified(requestedItem);
                 checkAgeDays(requestedItem);
                 return;
             }
 
             if (productType == ProductType.BEER) {
+                ageDaysMustNotBeProvided(requestedItem);
                 beerTypeMustBeProvided(requestedItem);
                 return;
+            }
+
+            if (productType == ProductType.VEGETABLE) {
+                beerTypeMustNotBeSpecified(requestedItem);
+                ageDaysMustNotBeProvided(requestedItem);
             }
         }
     }
@@ -84,6 +91,18 @@ public class OrdersValidationService {
             throw new IllegalArgumentException(
                     String.format("Invalid beer type '%s'. Allowed values are: DUTCH, BELGIAN, GERMAN.", beerTypeValue)
             );
+        }
+    }
+
+    private void ageDaysMustNotBeProvided(OrderItemRequest item) {
+        if (item.getAgeDays() != null) {
+            throw new IllegalArgumentException("Age Days must not be specified for BEER type");
+        }
+    }
+
+    private void beerTypeMustNotBeSpecified(OrderItemRequest item) {
+        if (item.getBeerType() != null) {
+            throw new IllegalArgumentException("Beer Type must not be specified for BREAD type");
         }
     }
 }
