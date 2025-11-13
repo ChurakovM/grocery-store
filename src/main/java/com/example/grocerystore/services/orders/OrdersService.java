@@ -1,4 +1,4 @@
-package com.example.grocerystore.services;
+package com.example.grocerystore.services.orders;
 
 import com.example.grocery.model.orders.*;
 import com.example.grocery.model.prices.ProductPrice;
@@ -43,6 +43,7 @@ public class OrdersService {
                     double discountAmount = calculator.calculateDiscount(item, price);
                     double totalPriceBeforeDiscount = calculator.calculateTotalPrice(item, price) + discountAmount;
                     double totalPrice = calculator.calculateTotalPrice(item, price);
+                    int freeQuantity = calculator.calculateFreeQuantity(item);
 
                     return new OrderItemResponse()
                             .productType(productType)
@@ -52,7 +53,8 @@ public class OrdersService {
                             .totalPriceBeforeDiscount(totalPriceBeforeDiscount)
                             .discountApplied(discountApplied)
                             .discountAmount(discountAmount)
-                            .totalPrice(totalPrice);
+                            .totalPrice(totalPrice)
+                            .freeQuantity(freeQuantity);
                 }).toList();
 
         double totalPriceBeforeDiscount = items

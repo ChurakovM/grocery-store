@@ -57,4 +57,9 @@ public class BeerCalculator implements ItemPriceCalculator {
         double totalPrice = item.getQuantity().doubleValue() * price.getUnitPrice();
         return roundToTwoDecimals(totalPrice - calculateDiscount(item, price));
     }
+
+    @Override
+    public int calculateFreeQuantity(OrderItemRequest item) {
+        return 0;
+    }
 }

@@ -32,18 +32,22 @@ public class BreadCalculator implements ItemPriceCalculator {
 
     @Override
     public double calculateDiscount(OrderItemRequest item, ProductPrice price) {
+        return 0.0;
+    }
+
+    public int calculateFreeQuantity(OrderItemRequest item) {
         Integer ageDays = item.getAgeDays();
-        if (ageDays == null) return 0.0;
+        if (ageDays == null) return 0;
 
         int quantity = item.getQuantity().intValue();
         for (BreadDiscount discount : discounts) {
             if (isDiscountForBreadsApplied(discount, ageDays)) {
-                int fullSets = quantity / discount.getTakeQuantity();
-                int freeItems = fullSets * (discount.getTakeQuantity() - discount.getBuyQuantity());
-                return roundToTwoDecimals(freeItems * price.getUnitPrice());
+                int buy = discount.getBuyQuantity();
+                int take= discount.getTakeQuantity();
+                return (take - buy) * quantity;
             }
         }
-        return 0.0;
+        return 0;
     }
 
     @Override

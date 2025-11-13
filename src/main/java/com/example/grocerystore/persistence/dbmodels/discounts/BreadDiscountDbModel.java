@@ -20,7 +20,9 @@ public class BreadDiscountDbModel {
     private Long id;
 
     @NotNull
-    private int ageDays;
+    private int minDays;
+
+    private Integer maxDays;
 
     @NotNull
     private int buyQuantity;

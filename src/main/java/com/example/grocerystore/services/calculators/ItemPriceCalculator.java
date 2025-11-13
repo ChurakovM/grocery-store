@@ -7,4 +7,5 @@ public interface ItemPriceCalculator {
     boolean isDiscountApplied(OrderItemRequest item);
     double calculateDiscount(OrderItemRequest item, ProductPrice price);
     double calculateTotalPrice(OrderItemRequest item, ProductPrice price);
+    int calculateFreeQuantity(OrderItemRequest item);
 }
