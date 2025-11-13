@@ -8,7 +8,7 @@ VALUES
 -- Beer discounts table
 INSERT INTO beer_discounts (beer_type, pack_price, pack_size)
 VALUES
-    ('Belgium', 3.0, 6),
+    ('Belgian', 3.0, 6),
     ('Dutch', 2.0, 6),
     ('German', 4.0, 6);
 
