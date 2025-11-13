@@ -57,3 +57,20 @@ You can easily test all API endpoints using the provided Postman collection:
 2. Click **Import** → **files**.
 3. Select the collection file from the `postman` folder.
 4. Run the requests directly against your local server (`http://localhost:8080`).
+
+## 🧪 Running Tests
+
+The project includes comprehensive tests for all product types — **bread**, **beer**, and **vegetables** —  
+covering validation logic, discount rules, and error handling.
+
+### ▶️ Run all tests via Maven
+```bash
+mvn test
+```
+
+### 🧠 Run individual test classes in your IDE
+
+You can also open any test class (e.g.,  
+`OrdersBreadsTests`, `OrdersBeersTests`, or `OrdersVegetablesTests`)  
+and execute it directly from your IDE using the **Run Test** option.
+
