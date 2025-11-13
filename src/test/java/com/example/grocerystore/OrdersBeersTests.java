@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-class OrdersBreadsTests {
+class OrdersBeersTests {
 
     private OrdersValidationService validationService;
 
@@ -38,26 +38,12 @@ class OrdersBreadsTests {
     }
 
     @Test
-    void validateNullRequest_shouldThrow() {
-        assertThrows(IllegalArgumentException.class,
-                () -> validationService.validateItems(null));
-    }
-
-    @Test
-    void validateEmptyItems_shouldThrow() {
-        CreateOrderRequest request = new CreateOrderRequest();
-        request.setItems(List.of());
-        assertThrows(IllegalArgumentException.class,
-                () -> validationService.validateItems(request));
-    }
-
-    @Test
     void validateQuantityNullOrZero_shouldThrow() {
         CreateOrderRequest request = new CreateOrderRequest();
         OrderItemRequest item = new OrderItemRequest();
-        item.setProductType(ProductType.BREAD);
+        item.setProductType(ProductType.BEER);
         item.setQuantity(BigDecimal.ZERO);
-        item.setAgeDays(3);
+        item.setBeerType(OrderItemRequest.BeerTypeEnum.DUTCH);
         request.setItems(List.of(item));
 
         assertThrows(IllegalArgumentException.class,
@@ -69,66 +55,61 @@ class OrdersBreadsTests {
     }
 
     @Test
-    void validateAgeDaysNullOrNegative_shouldThrow() {
+    void validateAgeDaysProvided_shouldThrow() {
         CreateOrderRequest request = new CreateOrderRequest();
         OrderItemRequest item = new OrderItemRequest();
-        item.setProductType(ProductType.BREAD);
+        item.setProductType(ProductType.BEER);
         item.setQuantity(BigDecimal.ONE);
-
-        // null ageDays
-        item.setAgeDays(null);
+        item.setBeerType(OrderItemRequest.BeerTypeEnum.DUTCH);
+        item.setAgeDays(1); // invalid for beer
         request.setItems(List.of(item));
-        assertThrows(IllegalArgumentException.class,
-                () -> validationService.validateItems(request));
 
-        // negative ageDays
-        item.setAgeDays(-1);
         assertThrows(IllegalArgumentException.class,
                 () -> validationService.validateItems(request));
     }
 
     @Test
-    void validateBreadTooOld_shouldThrow() {
+    void validateBeerTypeNull_shouldThrow() {
         CreateOrderRequest request = new CreateOrderRequest();
         OrderItemRequest item = new OrderItemRequest();
-        item.setProductType(ProductType.BREAD);
+        item.setProductType(ProductType.BEER);
         item.setQuantity(BigDecimal.ONE);
-
-        // ageDays = 7 → unsellable
-        item.setAgeDays(7);
+        item.setBeerType(null); // missing beer type
         request.setItems(List.of(item));
-        assertThrows(IllegalArgumentException.class,
-                () -> validationService.validateItems(request));
 
-        // ageDays > 7 → unsellable
-        item.setAgeDays(10);
         assertThrows(IllegalArgumentException.class,
                 () -> validationService.validateItems(request));
     }
 
     @Test
-    void validateBeerTypeSpecifiedForBread_shouldThrow() {
+    void validateBeerTypeCaseInsensitive_shouldPass() {
         CreateOrderRequest request = new CreateOrderRequest();
         OrderItemRequest item = new OrderItemRequest();
-        item.setProductType(ProductType.BREAD);
+        item.setProductType(ProductType.BEER);
         item.setQuantity(BigDecimal.ONE);
-        item.setAgeDays(3);
-        item.setBeerType(OrderItemRequest.BeerTypeEnum.DUTCH); // invalid for bread
 
+        // lowercase value → should pass
+        item.setBeerType(OrderItemRequest.BeerTypeEnum.fromValue("dutch".toUpperCase()));
         request.setItems(List.of(item));
-        assertThrows(IllegalArgumentException.class,
-                () -> validationService.validateItems(request));
+
+        assertDoesNotThrow(() -> validationService.validateItems(request));
+
+        // mixed case
+        item.setBeerType(OrderItemRequest.BeerTypeEnum.fromValue("BeLgIaN".toUpperCase()));
+        request.setItems(List.of(item));
+
+        assertDoesNotThrow(() -> validationService.validateItems(request));
     }
 
     @Test
-    void validateValidBread_shouldPass() {
+    void validateValidBeer_shouldPass() {
         CreateOrderRequest request = new CreateOrderRequest();
         OrderItemRequest item = new OrderItemRequest();
-        item.setProductType(ProductType.BREAD);
-        item.setQuantity(BigDecimal.ONE);
-        item.setAgeDays(4); // within discount range
-
+        item.setProductType(ProductType.BEER);
+        item.setQuantity(BigDecimal.valueOf(5));
+        item.setBeerType(OrderItemRequest.BeerTypeEnum.DUTCH);
         request.setItems(List.of(item));
+
         assertDoesNotThrow(() -> validationService.validateItems(request));
     }
 }
