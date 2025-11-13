@@ -26,9 +26,28 @@ The application will start at:
 
 ---
 
+### ⚙️ Running on a Different Port
+
+By default, the application runs on port **8080**.  
+If that port is already in use, you can run it on a different port in two ways:
+
+**Option 1 – Override via Maven command:**
+```bash
+mvn spring-boot:run -Dspring-boot.run.arguments="--server.port=9090"
+```
+
+**Option 2 – Update the configuration:**  
+Open `src/main/resources/application.properties` and add the line:
+
+```properties
+server.port=9091
+```
+
+---
+
 ## 🗄️ Database
 
-You can inspect the in-memory H2 database by visiting:  
+When the application is up and running, you can inspect the in-memory H2 database by visiting:  
 👉 http://localhost:8080/h2-console
 
 **Default credentials:**
@@ -40,7 +59,7 @@ You can inspect the in-memory H2 database by visiting:
 
 ## 📘 Swagger UI
 
-Explore all available endpoints (orders, discounts, prices):  
+While the application is running, explore all available endpoints (orders, discounts, prices):  
 👉 http://localhost:8080/swagger-ui/index.html#/
 
 ---
