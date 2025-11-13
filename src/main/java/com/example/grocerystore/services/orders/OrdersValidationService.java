@@ -8,6 +8,7 @@ import com.example.grocerystore.services.cache.DiscountsCacheService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -27,15 +28,31 @@ public class OrdersValidationService {
 
         for (OrderItemRequest requestedItem : requestedItems) {
             ProductType productType = requestedItem.getProductType();
+
+            checkQuantityIsPositiveNumber(requestedItem);
+
             if (productType == ProductType.BREAD) {
                 checkAgeDays(requestedItem);
+                return;
+            }
+
+            if (productType == ProductType.BEER) {
+                beerTypeMustBeProvided(requestedItem);
+                return;
             }
         }
     }
 
+    private void checkQuantityIsPositiveNumber(OrderItemRequest item) {
+        BigDecimal quantity = item.getQuantity();
+        if (quantity == null || quantity.intValue() <= 0) {
+            throw new IllegalArgumentException("Quantity must be provided and be a positive number");
+        }
+    }
+
     private void checkAgeDays(OrderItemRequest item) {
-        if (item.getAgeDays() == null) {
-            return;
+        if (item.getAgeDays() == null || item.getAgeDays() < 0) {
+            throw new IllegalArgumentException("Age Days must be provided and cannot be negative");
         }
         List<BreadDiscount> breads = discountsCacheService.getBreads();
         Integer requestedAgeDays = item.getAgeDays();
@@ -49,7 +66,23 @@ public class OrdersValidationService {
         if (requestedAgeDays >= unsellableMinDays) {
             throw new IllegalArgumentException(
                     String.format("Bread aged %d days cannot be sold (max allowed: %d days).",
-                            requestedAgeDays, unsellableMinDays - 1)
+                            requestedAgeDays, unsellableMinDays - 1));
+        }
+    }
+
+    private void beerTypeMustBeProvided(OrderItemRequest item) {
+        if (item.getBeerType() == null) {
+            throw new IllegalArgumentException("Beer type must be provided for BEER items.");
+        }
+
+        String beerTypeValue = item.getBeerType().getValue();
+
+        try {
+            // This will throw IllegalArgumentException if the value is not part of the enum
+            OrderItemRequest.BeerTypeEnum.fromValue(beerTypeValue.toUpperCase());
+        } catch (IllegalArgumentException ex) {
+            throw new IllegalArgumentException(
+                    String.format("Invalid beer type '%s'. Allowed values are: DUTCH, BELGIAN, GERMAN.", beerTypeValue)
             );
         }
     }
