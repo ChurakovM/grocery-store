@@ -44,13 +44,13 @@ components:
           items:
             $ref: '#/components/schemas/BeerDiscount'
           example:
-            - beerType: Belgium
+            - beerType: BELGIAN
               packPrice: 3.0
               packSize: 6
-            - beerType: Dutch
+            - beerType: DUTCH
               packPrice: 2.0
               packSize: 6
-            - beerType: German
+            - beerType: GERMAN
               packPrice: 4.0
               packSize: 6
         breadDiscounts:
@@ -90,8 +90,8 @@ components:
       properties:
         beerType:
           type: string
-          description: Type of beer, for instance "Belgium", "Dutch", "German".
-          example: Belgium
+          description: Type of beer, for instance "BELGIAN", "DUTCH", "GERMAN".
+          example: DUTCH
         packPrice:
           type: number
           format: double
