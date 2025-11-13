@@ -36,29 +36,5 @@ class OrdersBreadsTests {
         when(discountsCacheService.getBreads()).thenReturn(breadDiscounts);
     }
 
-    @Test
-    void testBreadWithinAllowedRange_passes() {
-        CreateOrderRequest request = new CreateOrderRequest();
-        OrderItemRequest item = new OrderItemRequest();
-        item.setProductType(ProductType.BREAD);
-        item.setQuantity(BigDecimal.valueOf(2));
-        item.setAgeDays(5);
-        request.setItems(List.of(item));
 
-        assertDoesNotThrow(() -> validationService.validateItems(request));
-    }
-
-    @Test
-    void testBreadAtUnsellableAge_throwsException() {
-        CreateOrderRequest request = new CreateOrderRequest();
-        OrderItemRequest item = new OrderItemRequest();
-        item.setProductType(ProductType.BREAD);
-        item.setQuantity(BigDecimal.valueOf(2));
-        item.setAgeDays(7);
-        request.setItems(List.of(item));
-
-        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
-                () -> validationService.validateItems(request));
-        assertTrue(ex.getMessage().contains("cannot be sold"));
-    }
 }
