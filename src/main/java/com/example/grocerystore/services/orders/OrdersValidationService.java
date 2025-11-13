@@ -27,8 +27,8 @@ public class OrdersValidationService {
         List<OrderItemRequest> requestedItems = createOrderRequest.getItems();
 
         for (OrderItemRequest requestedItem : requestedItems) {
+            productTypeMustBeSpecified(requestedItem);
             ProductType productType = requestedItem.getProductType();
-
             checkQuantityIsPositiveNumber(requestedItem);
 
             if (productType == ProductType.BREAD) {
@@ -47,6 +47,23 @@ public class OrdersValidationService {
                 beerTypeMustNotBeSpecified(requestedItem);
                 ageDaysMustNotBeProvided(requestedItem);
             }
+        }
+    }
+
+    private void productTypeMustBeSpecified(OrderItemRequest item) {
+        if (item.getProductType() == null) {
+            throw new IllegalArgumentException("Product Type must be provided");
+        }
+
+        String productTypeValue = item.getProductType().name();
+
+        try {
+            // Validate that it matches a known ProductType
+            ProductType.valueOf(productTypeValue);
+        } catch (IllegalArgumentException ex) {
+            throw new IllegalArgumentException(
+                    String.format("Invalid product type '%s'. Allowed values are: BREAD, BEER, VEGETABLE.", productTypeValue)
+            );
         }
     }
 

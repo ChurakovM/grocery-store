@@ -45,13 +45,97 @@
 			"response": []
 		},
 		{
-			"name": "Create Order",
+			"name": "Create Order With Bread",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n   \"items\":[\n      {\n         \"productType\":\"BREAD\",\n         \"quantity\":3,\n         \"ageDays\":3\n      },\n      {\n         \"productType\":\"VEGETABLE\",\n         \"quantity\":200\n      },\n      {\n         \"productType\":\"BEER\",\n         \"quantity\":6,\n         \"beerType\": \"GERMAN\"\n      }\n   ]\n}",
+					"raw": "{\n   \"items\":[\n      {\n         \"productType\":\"BREAD\",\n         \"quantity\":1,\n         \"ageDays\":2\n      }\n   ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Order With Beer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"items\":[\n      {\n         \"productType\":\"BEER\",\n         \"quantity\": 12,\n         \"beerType\": \"DUTCH\"\n      }\n   ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Order With Vegetables",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"items\":[\n      {\n         \"productType\":\"VEGETABLE\",\n         \"quantity\": 1000\n      }\n   ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Order With All Goods",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"items\":[\n      {\n         \"productType\":\"VEGETABLE\",\n         \"quantity\": 1000\n      },\n      {\n         \"productType\":\"BEER\",\n         \"quantity\": 12,\n         \"beerType\": \"DUTCH\"\n      },\n      {\n         \"productType\":\"BREAD\",\n         \"quantity\":1,\n         \"ageDays\":2\n      }\n   ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
