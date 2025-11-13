@@ -105,15 +105,20 @@ components:
     BreadDiscount:
       type: object
       required:
-        - ageDays
+        - minDays
         - buyQuantity
         - takeQuantity
       properties:
-        ageDays:
+        minDays:
           type: integer
           format: int32
-          description: Age of the bread in days.
+          description: "Minimum bread age in days (inclusive) when the discount starts applying."
           example: 3
+        maxDays:
+          type: integer
+          format: int32
+          description: "Maximum bread age in days (exclusive). If null, bread cannot be sold."
+          example: 7
         buyQuantity:
           type: integer
           format: int32

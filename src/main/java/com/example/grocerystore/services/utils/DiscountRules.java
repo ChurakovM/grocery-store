@@ -7,10 +7,20 @@ import com.example.grocery.model.discounts.VegetableDiscount;
 public class DiscountRules {
 
     public static boolean isDiscountForBreadsApplied(BreadDiscount discount, int ageDays) {
-        if (discount == null || discount.getAgeDays() == null) {
+        if (discount == null || discount.getMinDays() == null) {
             return false;
         }
-        return ageDays == discount.getAgeDays();
+
+        Integer min = discount.getMinDays();
+        Integer max = discount.getMaxDays();
+
+        // Bread with null maxDays cannot be sold
+        if (max == null) {
+            return false;
+        }
+
+        // Return true if ageDays is within [min, max)
+        return ageDays >= min && ageDays < max;
     }
 
     public static boolean isDiscountForBeersApplied(BeerDiscount discount, int quantity) {

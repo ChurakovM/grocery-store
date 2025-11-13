@@ -45,4 +45,9 @@ public class VegetableCalculator implements ItemPriceCalculator {
         double totalPrice = (item.getQuantity().doubleValue() / 100.0) * price.getUnitPrice();
         return roundToTwoDecimals(totalPrice - calculateDiscount(item, price));
     }
+
+    @Override
+    public int calculateFreeQuantity(OrderItemRequest item) {
+        return 0;
+    }
 }

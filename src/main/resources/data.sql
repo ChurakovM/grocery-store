@@ -13,10 +13,12 @@ VALUES
     ('German', 4.0, 6);
 
 -- Bread discounts table
-INSERT INTO bread_discounts (age_days, buy_quantity, take_quantity)
+INSERT INTO bread_discounts (min_days, max_days, buy_quantity, take_quantity)
 VALUES
-    (3, 1, 2),
-    (6, 1, 3);
+    (0, 3, 1, 1),
+    (3, 6, 1, 2),
+    (6, 7, 1, 3),
+    (7, null, 0, 0);
 
 -- Prices table
 INSERT INTO prices (product_type, unit_price, unit)

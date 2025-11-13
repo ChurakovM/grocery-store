@@ -106,6 +106,10 @@ components:
           description: Total price before discount
         discountApplied:
           type: boolean
+        freeQuantity:
+          type: integer
+          format: int32
+          description: Number of free items granted by a discount (e.g., 1 for 'buy 2 get 3rd free')
         discountAmount:
           type: number
           format: double
