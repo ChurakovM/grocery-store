@@ -77,6 +77,35 @@ You can easily test all API endpoints using the provided Postman collection:
 3. Select the collection file from the `postman` folder.
 4. Run the requests directly against your local server (`http://localhost:8080`).
 
+## Order Rules
+
+- **One order can have many items.**
+- **Allowed item types:** BREAD, VEGETABLE, BEER.
+
+### Breads
+- Always have discounts: “buy 1 take 2” or “buy 1 take 3”.
+- Discounts based on bread age:
+    - 0–1 days old → **no discount**
+    - 3 days old → **buy 1 take 2**
+    - 6 days old → **buy 1 take 3**
+    - Older than 6 days → **cannot be added** to orders
+
+### Vegetables
+- Discount is **percentage-based** depending on total weight of vegetables in the order:
+    - 0g – 100g → **5% discount**
+    - 101g – 500g → **7% discount**
+    - Above 500g → **10% discount**
+- Discount applies to **all vegetable items** in the order.
+
+### Beers
+- Discounts apply **only for packs of 6 beers**, fixed per pack type:
+    - Belgian pack → €3.00 per pack
+    - Dutch pack → €2.00 per pack
+    - German pack → €4.00 per pack
+- Single bottles/cans **can be added** to the order but **no discount** applies.
+- Buying 6 separate bottles of the same beer **counts as one discounted pack**.
+
+
 ## 🧪 Running Tests
 
 The project includes comprehensive tests for all product types — **bread**, **beer**, and **vegetables** —  
