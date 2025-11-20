@@ -3,7 +3,7 @@ package com.example.grocerystore.mappers;
 import com.example.grocery.model.discounts.BeerDiscount;
 import com.example.grocery.model.discounts.BreadDiscount;
 import com.example.grocery.model.discounts.VegetableDiscount;
-import com.example.grocery.model.prices.ProductPrice;
+import com.example.grocery.model.prices.ProductPriceWithId;
 import com.example.grocerystore.persistence.dbmodels.discounts.BeerDiscountDbModel;
 import com.example.grocerystore.persistence.dbmodels.discounts.BreadDiscountDbModel;
 import com.example.grocerystore.persistence.dbmodels.discounts.VegetableDiscountDbModel;
@@ -20,5 +20,7 @@ public interface DbModelMapper {
 
     BreadDiscount toBreadDiscount(BreadDiscountDbModel breadDiscountDbModel);
 
-    ProductPrice toProductPrice(PriceDbModel priceDbModel);
+    ProductPriceWithId toProductPrice(PriceDbModel priceDbModel);
+
+    PriceDbModel toPriceDbModel(ProductPriceWithId priceWithId);
 }
