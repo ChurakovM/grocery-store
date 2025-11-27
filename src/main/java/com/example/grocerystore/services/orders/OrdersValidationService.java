@@ -34,13 +34,11 @@ public class OrdersValidationService {
             if (productType == ProductType.BREAD) {
                 beerTypeMustNotBeSpecified(requestedItem);
                 checkAgeDays(requestedItem);
-                return;
             }
 
             if (productType == ProductType.BEER) {
                 ageDaysMustNotBeProvided(requestedItem);
                 beerTypeMustBeProvided(requestedItem);
-                return;
             }
 
             if (productType == ProductType.VEGETABLE) {
